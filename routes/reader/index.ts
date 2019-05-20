@@ -11,7 +11,7 @@ export var ReaderRoute = (express) => {
         }
         catch (err) { next(err) };
     })
-    router.put('/', async (req, res, next) => {
+    router.post('/', async (req, res, next) => {
         try {
             readerService = new ReaderService();
             await readerService.createReader(req.body.name);
@@ -55,6 +55,14 @@ export var ReaderRoute = (express) => {
         try {
             readerService = new ReaderService();
             await readerService.setRentToReader(req.body.library, req.params.id, req.body.bookName);
+            res.status(200).send("ok");
+        }
+        catch (err) { next(err) }
+    });
+    router.delete('/:us/books/:bookid', async (req, res, next) => {
+        try {
+            readerService = new ReaderService();
+            await readerService.delBookRent(req.params.bookid);
             res.status(200).send("ok");
         }
         catch (err) { next(err) }

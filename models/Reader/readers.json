@@ -1,1 +1,38 @@
-{"readers":[{"id":1,"name":"somebodyWho","libraries":[828]},{"id":2,"name":"kitaev","libraries":[828]},{"id":220,"name":"33","libraries":[]},{"id":957,"name":"somebody","libraries":[]}]}
+{
+    "readers": [
+        {
+            "id": 1,
+            "name": "somebodyWho",
+            "libraries": [
+                828
+            ]
+        },
+        {
+            "id": 2,
+            "name": "kitaev",
+            "libraries": [
+                828
+            ]
+        },
+        {
+            "id": 220,
+            "name": "abcda",
+            "libraries": []
+        },
+        {
+            "id": 957,
+            "name": "somebody",
+            "libraries": []
+        },
+        {
+            "id": 480,
+            "name": "kekowoleg",
+            "libraries": []
+        },
+        {
+            "id": 822,
+            "name": "kekowoleg",
+            "libraries": []
+        }
+    ]
+}

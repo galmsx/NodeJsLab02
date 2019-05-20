@@ -9,7 +9,7 @@ export var LibraryRouter = (express) => {
         }
         catch (err) { next(err) };
     });
-    router.put("/", async (req, res, next) => {
+    router.post("/", async (req, res, next) => {
         try {
             service = new LibraryService();
             await service.createLibrary();
@@ -49,7 +49,7 @@ export var LibraryRouter = (express) => {
         }
         catch (err) { next(err) };
     });
-    
+
     router.delete("/:lib/books/:id", async (req, res, next) => {
         try {
             service = new LibraryService();
