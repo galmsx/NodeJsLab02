@@ -11,10 +11,6 @@ let server = new http.Server(async function (req: http.IncomingMessage, res: htt
     console.log(req.method);
     console.log(req.url);
 
-    res.on("error", (e) => {
-      console.log("ERROR !!!!");
-      res.end("ERROR!!!")
-    })
 
     if (/^\/readers/.test(req.url)) {
       await ReaderRouter(req, res);
