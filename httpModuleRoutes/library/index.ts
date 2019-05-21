@@ -9,7 +9,7 @@ export var libraryRouter = async (req : IncomingMessage ,res : ServerResponse)=>
        case "GET" : await get(req,res); break;
        case "POST" : await post(req,res); break;
        case "DELETE" : await del(req,res); break;
-       default : res.emit("error");
+       default : throw Error("endpoint does not exist!");
    }
 
 }

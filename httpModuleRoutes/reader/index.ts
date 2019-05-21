@@ -11,7 +11,7 @@ export var ReaderRouter = async (req : IncomingMessage ,res : ServerResponse)=>{
        case "POST" : await post(req,res); break;
        case "DELETE" : await del(req,res); break;
        case "PATCH" : await patch(req,res); break;
-       default : res.emit("error");
+       default : throw Error("endpoint does not exist!");
    }
 
 }
