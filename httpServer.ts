@@ -6,6 +6,13 @@ import { libraryRouter } from './httpModuleRoutes/library';
 var dateOfstart: string;
 
 let server = new http.Server(async function (req: http.IncomingMessage, res: http.ServerResponse) {
+  req.on("error", (err) => {
+    res.end(`"error:"${err.message}"`);
+  });
+  res.on("error", (err) => {
+    res.end(`"error:"${err.message}"`);
+  });
+
   try {
     res.setHeader('Content-Type', 'application/json');
     console.log(req.method);
