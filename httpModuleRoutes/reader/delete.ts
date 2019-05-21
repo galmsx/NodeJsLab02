@@ -40,6 +40,7 @@ export var del = async (req: IncomingMessage, res: ServerResponse) => {
                 req.emit("error");
             }
         }
+        else{res.end('"ërror" : "endpoint does not exist"')}
 
     });
 }

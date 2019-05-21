@@ -18,7 +18,7 @@ export var post = async (req: IncomingMessage, res: ServerResponse) => {
                 res.end("ok");
             }
             catch (err) { res.emit("error") };
-        }
+        } else{res.end('"ërror" : "endpoint does not exist"')}
 
     });
 

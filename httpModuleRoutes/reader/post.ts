@@ -17,7 +17,7 @@ export var post = async (req: IncomingMessage, res: ServerResponse) => {
             return;
         }
 
-        if (/^\/readers\/\d+\/books\W?/.test(req.url)) {//post readers/id/books
+        if (/^\/readers\/\d+\/books\W?$/.test(req.url)) {//post readers/id/books
             try {
                 var id: number = + req.url.match(/\d+/g)[0];
                 readerService = new ReaderService();
@@ -34,6 +34,7 @@ export var post = async (req: IncomingMessage, res: ServerResponse) => {
             }
             catch (err) { res.emit("error") };
         }
+        else{res.end('"ërror" : "endpoint does not exist"')}
 
     });
 

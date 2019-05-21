@@ -17,11 +17,7 @@ export var get = async (req: IncomingMessage, res: ServerResponse) => {
             res.end(JSON.stringify(readerService.getReaderById(id)));
         }
         catch (err) { res.emit("error") };
-    };
-
-    console.log("I am here");
-  
-    console.log(/^\/readers\/\d+\/books\W?/.test(req.url));
+    }else 
     if (/^\/readers\/\d+\/books\W?/.test(req.url)) {//get readers/id/books
         try {
             var id: number = + req.url.match(/\d+/g)[0];
@@ -33,6 +29,6 @@ export var get = async (req: IncomingMessage, res: ServerResponse) => {
             res.end(JSON.stringify(toSend));
         }
         catch (err) { res.emit("error") };
-    };
+    } else{res.end('"ërror" : "endpoint does not exist"')}
 
 }
