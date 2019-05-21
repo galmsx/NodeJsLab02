@@ -9,7 +9,7 @@ export var post = async (req: IncomingMessage, res: ServerResponse) => {
     });
 
     req.on('end', async () => {
-        var data = JSON.parse(json);
+        //var data = JSON.parse(json);
 
         if (/^\/libraries\W?$/.test(req.url)) { // post /libraries/
             try {

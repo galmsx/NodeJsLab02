@@ -10,6 +10,7 @@ let server = new http.Server(async function (req: http.IncomingMessage, res: htt
     res.setHeader('Content-Type', 'application/json');
     console.log(req.method);
     console.log(req.url);
+
     res.on("error", (e) => {
       console.log("ERROR !!!!");
       res.end("ERROR!!!")

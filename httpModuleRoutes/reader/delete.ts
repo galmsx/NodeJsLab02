@@ -2,7 +2,7 @@ import { ReaderService } from '../../services/ReaderService';
 import { IncomingMessage, ServerResponse } from 'http';
 var readerService: ReaderService;
 
-export var del = async (req : IncomingMessage,res : ServerResponse)=>{
+export var del = async (req: IncomingMessage, res: ServerResponse) => {
 
     var json: string = '';
     req.on('data', (data) => {
@@ -10,7 +10,13 @@ export var del = async (req : IncomingMessage,res : ServerResponse)=>{
     });
 
     req.on('end', async () => {
-        var data = JSON.parse(json);
+        try {
+           // var data = JSON.parse(json);
+        }
+        catch (e) {
+            res.emit("error");
+            return;
+        }
 
         if (/^\/readers\/\d+\W?$/.test(req.url)) {
             try {
@@ -19,18 +25,18 @@ export var del = async (req : IncomingMessage,res : ServerResponse)=>{
                 await readerService.deleteReader(id);
                 res.end("ok");
             }
-            catch(e){
+            catch (e) {
                 req.emit("error");
             }
         }
-        else if(/^\/readers\/\d+\/books\/\d+W?$/.test(req.url)){
+        else if (/^\/readers\/\d+\/books\/\d+W?$/.test(req.url)) {
             try {
                 var id: number = + req.url.match(/\d+/g)[1];
                 readerService = new ReaderService();
                 await readerService.delBookRent(id);
                 res.end("ok");
             }
-            catch(e){
+            catch (e) {
                 req.emit("error");
             }
         }

@@ -4,7 +4,7 @@ var service: LibraryService;
 import { IncomingMessage, ServerResponse } from 'http';
 
 
-export var del = async (req : IncomingMessage,res : ServerResponse)=>{
+export var del = async (req: IncomingMessage, res: ServerResponse) => {
 
     var json: string = '';
     req.on('data', (data) => {
@@ -12,7 +12,13 @@ export var del = async (req : IncomingMessage,res : ServerResponse)=>{
     });
 
     req.on('end', async () => {
-        var data = JSON.parse(json);
+        try {
+        //    var data = JSON.parse(json);
+        }
+        catch (e) {
+            res.emit("error");
+            return;
+        }
 
         if (/^\/libraries\/\d+\W?$/.test(req.url)) {
             try {
@@ -21,19 +27,19 @@ export var del = async (req : IncomingMessage,res : ServerResponse)=>{
                 await service.deleteLibrary(id);
                 res.end("ok");
             }
-            catch(e){
-                req.emit("error");
+            catch (e) {
+                res.emit("error");
             }
         }
-        else if(/^\/libraries\/\d+\/books\/\d+W?$/.test(req.url)){
+        else if (/^\/libraries\/\d+\/books\/\d+W?$/.test(req.url)) {
             try {
                 var id: number = + req.url.match(/\d+/g)[1];
                 service = new LibraryService();
                 await service.delBookRent(id);
                 res.end("ok");
             }
-            catch(e){
-                req.emit("error");
+            catch (e) {
+                res.emit("error");
             }
         }
 

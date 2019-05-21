@@ -9,7 +9,13 @@ export var patch = async (req: IncomingMessage, res: ServerResponse) => {
     });
 
     req.on('end', async () => {
-        var data = JSON.parse(json);
+        try {
+            var data = JSON.parse(json);
+        }
+        catch (e) {
+            res.emit("error");
+            return;
+        }
 
         if (/^\/readers\/\d+\W?/.test(req.url)) {//patch readers/id/
             try {
