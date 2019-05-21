@@ -3,32 +3,30 @@ import { IncomingMessage, ServerResponse } from 'http';
 var readerService: ReaderService;
 
 export var get = async (req: IncomingMessage, res: ServerResponse) => {
-    readerService = new ReaderService;
-    if (/^\/readers\W?$/.test(req.url)) {
-        try {
+    try {
+        if (/^\/readers\W?$/.test(req.url)) {
             readerService = new ReaderService();
             res.end(JSON.stringify(readerService.getReadersList()));
-        }
-        catch (err) { res.emit("error") };
-    } else if (/^\/readers\/\d+\W?$/.test(req.url)) {
-        try {
+
+        } else if (/^\/readers\/\d+\W?$/.test(req.url)) {
+
             var id: number = + req.url.match(/\d+/g)[0];
             readerService = new ReaderService();
             res.end(JSON.stringify(readerService.getReaderById(id)));
-        }
-        catch (err) { res.emit("error") };
-    }else 
-    if (/^\/readers\/\d+\/books\W?/.test(req.url)) {//get readers/id/books
-        try {
-            var id: number = + req.url.match(/\d+/g)[0];
-            readerService = new ReaderService();
-            var result = (await readerService.getReaderBooks(id));
-            var toSend = {
-                books : result
-            }
-            res.end(JSON.stringify(toSend));
-        }
-        catch (err) { res.emit("error") };
-    } else{res.end('"ërror" : "endpoint does not exist"')}
+        } else
+            if (/^\/readers\/\d+\/books\W?/.test(req.url)) {//get readers/id/books
+
+                var id: number = + req.url.match(/\d+/g)[0];
+                readerService = new ReaderService();
+                var result = (await readerService.getReaderBooks(id));
+                var toSend = {
+                    books: result
+                }
+                res.end(JSON.stringify(toSend));
+
+            } else { res.end('"ërror" : "endpoint does not exist"') }
+    } catch (err) {
+        res.end(`"error" : "${err.message}"`);
+    }
 
 }

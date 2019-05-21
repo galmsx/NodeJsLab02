@@ -10,37 +10,24 @@ export var del = async (req: IncomingMessage, res: ServerResponse) => {
     });
 
     req.on('end', async () => {
-        try {
-           // var data = JSON.parse(json);
-        }
-        catch (e) {
-            res.emit("error");
-            return;
-        }
 
-        if (/^\/readers\/\d+\W?$/.test(req.url)) {
-            try {
+        try {
+            if (/^\/readers\/\d+\W?$/.test(req.url)) {
                 var id: number = + req.url.match(/\d+/g)[0];
                 readerService = new ReaderService();
                 await readerService.deleteReader(id);
                 res.end("ok");
             }
-            catch (e) {
-                req.emit("error");
-            }
-        }
-        else if (/^\/readers\/\d+\/books\/\d+W?$/.test(req.url)) {
-            try {
+            else if (/^\/readers\/\d+\/books\/\d+W?$/.test(req.url)) {
                 var id: number = + req.url.match(/\d+/g)[1];
                 readerService = new ReaderService();
                 await readerService.delBookRent(id);
                 res.end("ok");
             }
-            catch (e) {
-                req.emit("error");
-            }
-        }
-        else{res.end('"ërror" : "endpoint does not exist"')}
+            else { res.end('"ërror" : "endpoint does not exist"') }
+        } catch (err) {
+            res.end(`"error" : "${err.message}"`);
+        };
 
     });
 }

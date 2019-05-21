@@ -10,15 +10,18 @@ export var post = async (req: IncomingMessage, res: ServerResponse) => {
 
     req.on('end', async () => {
         //var data = JSON.parse(json);
+        try{
 
         if (/^\/libraries\W?$/.test(req.url)) { // post /libraries/
-            try {
+          
                 service = new LibraryService();
                 await service.createLibrary();
                 res.end("ok");
-            }
-            catch (err) { res.emit("error") };
+
         } else{res.end('"ërror" : "endpoint does not exist"')}
+        }catch(err){
+            res.end(`"error" : "${err.message}"`)
+        }
 
     });
 

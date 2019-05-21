@@ -11,30 +11,23 @@ export var post = async (req: IncomingMessage, res: ServerResponse) => {
     req.on('end', async () => {
         try {
             var data = JSON.parse(json);
-        }
-        catch (e) {
-            res.emit("error");
-            return;
-        }
 
-        if (/^\/readers\/\d+\/books\W?$/.test(req.url)) {//post readers/id/books
-            try {
+            if (/^\/readers\/\d+\/books\W?$/.test(req.url)) {//post readers/id/books
                 var id: number = + req.url.match(/\d+/g)[0];
                 readerService = new ReaderService();
                 await readerService.setRentToReader(data.library, id, data.bookName);
                 res.end("ok");
-            }
-            catch (err) { res.emit("error") };
-        } else if (/^\/readers\W?$/.test(req.url)) { // post /readers/
-            try {
+
+            } else if (/^\/readers\W?$/.test(req.url)) { // post /readers/
                 readerService = new ReaderService();
                 await readerService.createReader(data.name);
                 console.log(data);
                 res.end("ok");
             }
-            catch (err) { res.emit("error") };
+            else { res.end('"ërror" : "endpoint does not exist"') }
+        } catch (err) {
+            res.end(`"error" : "${err.message}"`)
         }
-        else{res.end('"ërror" : "endpoint does not exist"')}
 
     });
 

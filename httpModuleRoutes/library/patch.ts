@@ -11,21 +11,18 @@ export var patch = async (req: IncomingMessage, res: ServerResponse) => {
     req.on('end', async () => {
         try {
             var data = JSON.parse(json);
-        }
-        catch (e) {
-            res.emit("error");
-            return;
-        }
 
-        if (/^\/readers\/\d+\W?/.test(req.url)) {//patch readers/id/
-            try {
+
+            if (/^\/readers\/\d+\W?/.test(req.url)) {//patch readers/id/
+
                 var id: number = + req.url.match(/\d+/g)[0];
                 readerService = new ReaderService();
                 await readerService.apdateReaderName(id, data.name);;
                 res.end("ok");
-            }
-            catch (err) { res.emit("error") };
-        } else{res.end('"ërror" : "endpoint does not exist"')}
+            } else { res.end('"ërror" : "endpoint does not exist"') }
+        } catch (err) {
+            res.end(`"error" : "${err.message}"`)
+        }
 
     });
 
